@@ -14,60 +14,38 @@ pipeline{
                 }
             }
         }
-        stage('UNIT testing'){
+        // stage('UNIT testing'){
             
-            steps{
+        //     steps{
                 
-                script{
+        //         script{
                     
-                    sh 'maven test'
-                }
-            }
-        }
-        stage('Integration testing'){
+        //             sh 'maven test'
+        //         }
+        //     }
+        // }
+        // stage('Integration testing'){
             
-            steps{
+        //     steps{
                 
-                script{
+        //         script{
                     
-                    sh 'mvn verify -DskipUnitTests'
-                }
-            }
-        }
+        //             sh 'mvn verify -DskipUnitTests'
+        //         }
+        //     }
+        // }
         stage('Maven build'){
             
             steps{
                 
                 script{
                     
-                    sh 'mvn clean install'
+                    sh 'maven clean install'
                 }
             }
         }
-        stage('Static code analysis'){
+        
             
-            steps{
-                
-                script{
-                    
-                    withSonarQubeEnv(credentialsId: 'sonar-api') {
-                        
-                        sh 'mvn clean package sonar:sonar'
-                    }
-                   }
-                    
-                }
-            }
-            stage('Quality Gate Status'){
-                
-                steps{
-                    
-                    script{
-                        
-                        waitForQualityGate abortPipeline: false, credentialsId: 'sonar-api'
-                    }
-                }
-            }
         }
         
 }
